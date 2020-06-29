@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Изучаем библиотеку jQuery</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      function valid(){
+        var state = $('input[name = "sex"]:checked').val();
+        if(!state) return $("#message").html("<font style='color:red'>Укажите ваш пол!</font><br/>");
+        $('#message').hide();
+        //alert(state);
+        if(state == "male") $('#img').show();
+      }
+    </script>
+    <style media="screen">
+      .div_1 {
+        background-color: rgb(3, 112, 44);
+      }
+      .div_2 {
+        background-color: rgb(76, 13, 222);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test" onclick="$('#test').hide()">Test</div>
+    <form id="form" name="form" action="index.html" method="post">
+      <label for="female">Женский</label>
+      <input type="radio" name="sex" id="female" value="female"/>
+      <label for="male">Мужской</label>
+      <input type="radio" name="sex" id="male" value="male"/>
+      <br/><br/>
+      <span id="message"></span>
+      <input type="button" id="done" onclick="return valid()" name="" value="Готово">
+    </form>
+    <img src="" alt="1.png" id="img" style="display:none">
+    <br/><br/>
+
+    <div id="text">Text</div>
+    <script type="text/javascript">
+      var div = prompt('Введите 1 или 2');
+      while(div!=1 && div!=2){
+        div = prompt('Введите 1 или 2');
+      }
+      $('#text').attr('class', 'div_'+div);
+    </script>
+
+    <div class="divSize">Test</div>
+    <script type="text/javascript">
+      $('.divSize').css('font-size', function(){
+        var i = prompt('Введите размер текста:');
+        return i +'px';
+      });
+
+      $('.divSize').css('background-color', function(){
+        var i = prompt('Введите цвет фона:');
+        return i;
+      });
+
+      $('.divSize').css('height', function(){
+        var i = prompt('Введите высоту:');
+        return i +'px';
+      });
+
+      $('.divSize').css('width', function(){
+        var i = prompt('Введите ширину:');
+        return i +'px';
+      });
+    </script>
+    <br><br>
+
+    <div class="divClone" style="background-color: rgb(145, 111, 208)">
+      Блок
+      <p>Абзац</p>
+    </div>
+
+    <script type="text/javascript">
+    var block = $('.divClone').clone();
+
+    block.html("<p>Новый абзац</p>");
+    block.css('font-size', '50px')
+
+    $('body').append(block);
+    </script>
+
+    <div class="divChange">
+      Block
+    </div>
+
+    <script type="text/javascript">
+    $('<p>New text</p>').prependTo('.divChange');
+    $('<p>New text</p>').appendTo('.divChange');
+    $('<p>Before text</p>').insertBefore('.divChange');
+    $('<p>After text</p>').insertAfter('.divChange');
+    </script>
+
+    <script type="text/javascript">
+    function incSize(event){
+      var width = Number(event.target.style.width.substring(0, event.target.style.width.length-2));
+      event.target.style.width = (width + 5) + 'px';
+      if(event.target.style.width == '100px') $(event.target).unbind();
+      $('<p>Координаты мышки при нажатии: Х - ' + event.screenX + 'Y - ' + event.screenY + '</p>').insertAfter('.div_bind:last');
+    }
+
+    $(document).ready(function(){
+      $('.div_bind').bind("click", incSize);
+      $(document).on('click', 'p', function (){
+        alert('test');
+      });
+    });
+    </script>
+
+    <div class="div_bind" style="width: 50px; height: 50px; background-color:red"></div>
+    <div class="div_bind" style="width: 50px; height: 50px; background-color:blue"></div>
+    <div class="div_bind" style="width: 50px; height: 50px; background-color:green"></div>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $(document).on('click', '#add_comment', function(){
+          var form =  $('form[name="form1"]');
+          form.css('display','block');
+          $('#add_comment').replaceWith(form);
+        });
+
+        $(document).on('click', 'input[name="send"]', function(){
+          var comment = $('textarea[name="comment"]').val();
+          alert('Загружаются комментарии...');
+          $('<p>' + comment + '</p>').appendTo('#comments');
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+
+      function hideComment(){
+        $('#comments').hide(1000, function(){
+          $('#hide').hide();
+          $('#show').show();
+        });
+      };
+
+      function showComment(){
+        $('#hide').show();
+        $('#show').hide();
+        $('#comments').show(1000, function(){
+        });
+      };
+
+      $(document).ready( function (){
+        $('#hide').bind('click', hideComment);
+        $('#show').bind('click', showComment);
+      });
+    </script>
+
+    <a href="#" id="hide" onclick="return false">Скрыть комментарии</a>
+    <a href="#" id="show" onclick="return false" style="display: none">Показать комментарии</a>
+
+    <div id="comments">
+      <p>Комментарий №1</p>
+      <p>Комментарий №2</p>
+      <p>Комментарий №3</p>
+    </div>
+
+    <form id="form" name="form1" action="index.html" method="post" style="display:none" onsubmit='return false'>
+      <textarea id="textarea" name="comment" cols="40" rows = "10"></textarea><br>
+
+      <input type="submit" name="send" value="Добавить комментарий" id="done">
+    </form>
+    <a href="#" onclick="return false" id="add_comment">Добавить комментарий</a>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('img').bind('click', function(event){
+          $(event.target).parent().css('text-align', 'center');
+          $(event.target).animate({
+            width: $(event.target).width() * 5,
+            height: $(event.target).height() * 5,
+          },3000);
+        });
+      });
+    </script>
+
+    <p id="test">
+      <img src="https://avatars.mds.yandex.net/get-pdb/2848850/7874afa4-4aad-4504-8dd6-fab8fafac51d/s1200" alt="Картинка" title="Картинка" width="200px">
+    </p>
+
+  </body>
+</html>
